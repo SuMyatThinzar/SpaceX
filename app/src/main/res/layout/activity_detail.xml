@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/color_primary_dark"
+    tools:context=".activities.DetailActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/color_primary_dark"
+        app:titleTextColor="@color/color_accent"
+        android:elevation="4dp"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:padding="@dimen/margin_medium_2"
+        android:layout_marginTop="@dimen/margin_medium_2"
+        android:layout_gravity="center_horizontal"
+        android:src="@mipmap/ic_launcher"
+        app:cornerRadius="@dimen/margin_medium_3"
+        android:transitionName="img_transition"/>
+
+    <TextView
+        android:id="@+id/tvLaunchName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium_3"
+        android:paddingStart="@dimen/margin_medium_2"
+        android:paddingEnd="@dimen/margin_medium_2"
+        android:textColor="@color/color_accent"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_regular_3x"
+        android:text="Launch Name"/>
+
+    <TextView
+        android:id="@+id/tvLaunchDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/margin_medium_2"
+        android:paddingEnd="@dimen/margin_medium_2"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginBottom="@dimen/margin_medium_2"
+        android:textSize="@dimen/text_regular"
+        android:textColor="@color/color_accent"
+        android:text="Launch Date"/>
+
+    <TextView
+        android:id="@+id/tvLaunchDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/margin_medium_2"
+        android:paddingEnd="@dimen/margin_medium_2"
+        android:layout_marginBottom="@dimen/margin_medium_2"
+        android:textColor="@color/color_accent"
+        android:textSize="@dimen/text_regular_2x"
+        android:text="Launch Detail"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginStart="@dimen/margin_medium_2"
+        android:layout_marginEnd="@dimen/margin_medium_2">
+
+        <TextView
+            android:id="@+id/btnReadArticle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_border_color_accent"
+            android:padding="@dimen/margin_card_medium_2"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:text="Read Article"
+            android:textColor="@color/color_accent"
+            android:textSize="@dimen/text_regular_2x"/>
+
+        <ImageButton
+            android:id="@+id/ibWiki"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_medium_2"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_wikipedia_logo"/>
+
+        <ImageButton
+            android:id="@+id/ibYoutube"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_medium"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_youtube_logo"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvFailureTimes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/margin_medium_2"
+        android:paddingEnd="@dimen/margin_medium_2"
+        android:layout_marginTop="@dimen/margin_medium_2"
+        android:layout_marginBottom="@dimen/margin_medium_2"
+        android:textColor="@color/color_accent"
+        android:textSize="@dimen/text_regular_2x"
+        android:text="Failure Times"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tvFailureAltitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/margin_medium_2"
+        android:paddingEnd="@dimen/margin_medium_2"
+        android:layout_marginBottom="@dimen/margin_medium_2"
+        android:textColor="@color/color_accent"
+        android:textSize="@dimen/text_regular_2x"
+        android:text="Failure Altitude"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tvFailureReason"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/margin_medium_2"
+        android:paddingEnd="@dimen/margin_medium_2"
+        android:layout_marginBottom="@dimen/margin_medium_2"
+        android:textColor="@color/color_accent"
+        android:textSize="@dimen/text_regular_2x"
+        android:text="Failure Reason"
+        android:visibility="gone"/>
+
+</LinearLayout>
