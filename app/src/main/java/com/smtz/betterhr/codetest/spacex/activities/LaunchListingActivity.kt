@@ -16,17 +16,19 @@ import com.smtz.betterhr.codetest.spacex.databinding.ActivityLaunchListingBindin
 import com.smtz.betterhr.codetest.spacex.utils.hideProgressBar
 import com.smtz.betterhr.codetest.spacex.utils.showToastMessage
 import com.smtz.betterhr.codetest.spacex.viewmodels.LaunchListingViewModel
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class LaunchListingActivity : AppCompatActivity(), LaunchesDelegate {
 
     private val binding by lazy {
         ActivityLaunchListingBinding.inflate(layoutInflater)
     }
-    private val mLaunchesAdapter by lazy {
-        LaunchesRecyclerViewAdapter(this)
-    }
-    
-    private lateinit var mLaunchListingViewModel : LaunchListingViewModel
+
+    private val mLaunchListingViewModel by viewModel<LaunchListingViewModel>()
+
+    private val mLaunchesAdapter by inject<LaunchesRecyclerViewAdapter> { parametersOf(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +42,7 @@ class LaunchListingActivity : AppCompatActivity(), LaunchesDelegate {
     }
 
     private fun setUpViewModel() {
-        mLaunchListingViewModel = ViewModelProvider(this)[LaunchListingViewModel::class.java]
+//        mLaunchListingViewModel = ViewModelProvider(this)[LaunchListingViewModel::class.java]
         mLaunchListingViewModel.getInitialData()
     }
 
