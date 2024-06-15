@@ -21,7 +21,7 @@
             android:name=".activities.ArticleActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.DetailActivity"
+            android:name=".activities.LaunchDetailActivity"
             android:exported="false" />
         <activity
             android:name=".activities.LaunchListingActivity"

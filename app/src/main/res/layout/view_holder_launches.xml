@@ -7,7 +7,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:backgroundTint="@color/color_primary_light"
         android:layout_marginBottom="@dimen/margin_medium_3"
         android:layout_marginStart="@dimen/margin_medium_3"
         android:layout_marginEnd="@dimen/margin_medium_3"
@@ -41,7 +41,7 @@
                     android:id="@+id/tvLaunchName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/color_primary_dark"
+                    android:textColor="@color/color_accent"
                     android:textSize="@dimen/text_regular_2x"
                     android:textStyle="bold"
                     android:text="Launch Name" />
@@ -51,7 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_medium"
-                    android:textColor="@color/color_primary_dark"
+                    android:textColor="@color/color_accent"
                     android:text="Launch Date" />
 
             </LinearLayout>

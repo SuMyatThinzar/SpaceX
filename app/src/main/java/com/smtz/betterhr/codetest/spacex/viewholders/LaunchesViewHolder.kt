@@ -19,7 +19,6 @@ class LaunchesViewHolder(
         itemView.setOnClickListener {
             mLaunchVO?.let { launch ->
                 launchesDelegate.onTapLaunches(launch, binding.ivImage)
-//                itemView.context.startActivity(DetailActivity.newIntent(itemView.context, launch.links?.article ?: ""))
             }
         }
     }
@@ -30,10 +29,10 @@ class LaunchesViewHolder(
         // Date and Time Formatting
         val formatter = DateTimeFormatter.ISO_ZONED_DATE_TIME
         val dateTime = ZonedDateTime.parse(launchVO.launchDateUtc, formatter)
-        val formattedDate = dateTime.format(DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm:ss"))
+        val formattedDate = dateTime.format(DateTimeFormatter.ofPattern("MMM dd, yyyy - HH:mm:ss"))
 
         // bind data to views
-        binding.tvLaunchName.text = launchVO.missionName
+        binding.tvLaunchName.text = launchVO.name
         binding.tvLaunchDate.text = formattedDate
 
         if (!launchVO.links?.patch?.small.isNullOrEmpty()) {

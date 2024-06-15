@@ -1,12 +1,8 @@
 package com.smtz.betterhr.codetest.spacex.activities
 
 import android.os.Bundle
-import android.transition.Fade
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityOptionsCompat
-import androidx.core.view.ViewCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.smtz.betterhr.codetest.spacex.Listeners.LaunchesDelegate
@@ -15,6 +11,7 @@ import com.smtz.betterhr.codetest.spacex.data.vos.LaunchVO
 import com.smtz.betterhr.codetest.spacex.databinding.ActivityLaunchListingBinding
 import com.smtz.betterhr.codetest.spacex.utils.hideProgressBar
 import com.smtz.betterhr.codetest.spacex.utils.showToastMessage
+import com.smtz.betterhr.codetest.spacex.utils.startActivityWithTransitionAnimation
 import com.smtz.betterhr.codetest.spacex.viewmodels.LaunchListingViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -61,7 +58,8 @@ class LaunchListingActivity : AppCompatActivity(), LaunchesDelegate {
         }
 
         mLaunchListingViewModel.mErrorLiveData.observe(this) { errorMsg ->
-            showToastMessage(this, errorMsg)
+            hideProgressBar(binding.progressBar)
+            showToastMessage(applicationContext, errorMsg)
         }
     }
 
@@ -69,19 +67,7 @@ class LaunchListingActivity : AppCompatActivity(), LaunchesDelegate {
         // Convert the object to a JSON string
         val jsonString = Gson().toJson(launchVO)
 
-        // Transition with image
-        val fade = Fade()
-        fade.excludeTarget(android.R.id.statusBarBackground, true)
-        fade.excludeTarget(android.R.id.navigationBarBackground, true)
-
-        window.enterTransition = fade
-        window.exitTransition = fade
-
-        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-            this, imageView, ViewCompat.getTransitionName(imageView)!!
-        )
-
-        startActivity(DetailActivity.newIntent(this, jsonString), options.toBundle())
+        startActivityWithTransitionAnimation(activity = this, imageView = imageView, jsonString = jsonString)
     }
 
 }

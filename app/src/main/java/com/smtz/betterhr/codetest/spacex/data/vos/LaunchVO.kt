@@ -1,7 +1,6 @@
 package com.smtz.betterhr.codetest.spacex.data.vos
 
 import com.google.gson.annotations.SerializedName
-import com.smtz.betterhr.codetest.spacex.data.vos.LinkVO
 
 data class LaunchVO (
 
@@ -9,7 +8,7 @@ data class LaunchVO (
     val id: String?,
 
     @SerializedName("name")
-    val missionName: String?,
+    val name: String?,
 
     @SerializedName("date_utc")
     val launchDateUtc: String?,
@@ -22,5 +21,8 @@ data class LaunchVO (
 
     @SerializedName("failures")
     val failures: List<FailureVO>?,
+
+    @SerializedName("payloads")
+    val payloads: List<String>?,
 
 )

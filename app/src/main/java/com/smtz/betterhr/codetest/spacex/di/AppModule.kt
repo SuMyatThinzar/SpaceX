@@ -2,10 +2,11 @@ package com.smtz.betterhr.codetest.spacex.di
 
 import com.smtz.betterhr.codetest.spacex.Listeners.LaunchesDelegate
 import com.smtz.betterhr.codetest.spacex.adapters.LaunchesRecyclerViewAdapter
-import com.smtz.betterhr.codetest.spacex.data.model.LaunchRepository
-import com.smtz.betterhr.codetest.spacex.data.model.LaunchRepositoryImpl
+import com.smtz.betterhr.codetest.spacex.data.model.SpaceXRepository
+import com.smtz.betterhr.codetest.spacex.data.model.SpaceXRepositoryImpl
 import com.smtz.betterhr.codetest.spacex.network.SpaceXApi
 import com.smtz.betterhr.codetest.spacex.utils.BASE_URL
+import com.smtz.betterhr.codetest.spacex.viewmodels.LaunchDetailViewModel
 import com.smtz.betterhr.codetest.spacex.viewmodels.LaunchListingViewModel
 import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -35,12 +36,16 @@ var appModule = module {
             .create(SpaceXApi::class.java)
     }
 
-    single<LaunchRepository> {
-        LaunchRepositoryImpl(get())
+    single<SpaceXRepository> {
+        SpaceXRepositoryImpl(get())
     }
 
     viewModel {
         LaunchListingViewModel(get())
+    }
+
+    viewModel {
+        LaunchDetailViewModel(get())
     }
 
     factory {

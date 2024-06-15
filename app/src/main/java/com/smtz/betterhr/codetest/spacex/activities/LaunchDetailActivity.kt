@@ -6,20 +6,24 @@ import android.graphics.PorterDuff
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.smtz.betterhr.codetest.spacex.R
 import com.smtz.betterhr.codetest.spacex.data.vos.LaunchVO
+import com.smtz.betterhr.codetest.spacex.data.vos.PayloadVO
 import com.smtz.betterhr.codetest.spacex.databinding.ActivityDetailBinding
-import com.smtz.betterhr.codetest.spacex.utils.setVisibleOrGone
+import com.smtz.betterhr.codetest.spacex.utils.checkNullOrEmptyAndBindText
+import com.smtz.betterhr.codetest.spacex.utils.*
+import com.smtz.betterhr.codetest.spacex.viewmodels.LaunchDetailViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class DetailActivity : AppCompatActivity() {
+class LaunchDetailActivity : AppCompatActivity() {
 
     private val binding by lazy {
         ActivityDetailBinding.inflate(layoutInflater)
     }
+    private val mLaunchDetailViewModel by viewModel<LaunchDetailViewModel>()
 
     private var mLaunchVO: LaunchVO? = null
 
@@ -27,7 +31,7 @@ class DetailActivity : AppCompatActivity() {
         private const val EXTRA_LAUNCH_VO_STR = "EXTRA LAUNCH VO STR"
 
         fun newIntent(context: Context, launchVOStr: String) : Intent {
-            val intent = Intent(context, DetailActivity::class.java)
+            val intent = Intent(context, LaunchDetailActivity::class.java)
             intent.putExtra(EXTRA_LAUNCH_VO_STR, launchVOStr)
             return intent
         }
@@ -40,16 +44,40 @@ class DetailActivity : AppCompatActivity() {
         val launchVOJsonStr = intent.getStringExtra(EXTRA_LAUNCH_VO_STR) ?: ""
         mLaunchVO = Gson().fromJson(launchVOJsonStr, LaunchVO::class.java) // Convert Json String back to Object
 
+        setUpViewModel()
+
         setUpToolBar()
         setUpListeners()
-        bindData()
+        bindLaunchData()
+
+        observeLiveData()
+    }
+
+    private fun setUpViewModel() {
+        mLaunchVO?.let { launch ->
+            launch.payloads?.get(0)?.let { payloadId ->
+                mLaunchDetailViewModel.getInitialData(payloadId)
+            } ?: binding.llPayload.setVisibleOrGone(false)          // hide payload view group
+        }
+    }
+
+    private fun observeLiveData() {
+        mLaunchDetailViewModel.mPayloadLiveData.observe(this) { payload ->
+            hideProgressBar(binding.progressBar)
+            bindPayloadData(payload)
+        }
+
+        mLaunchDetailViewModel.mErrorLiveData.observe(this) { errorMsg ->
+            hideProgressBar(binding.progressBar)
+            showToastMessage(applicationContext, errorMsg)
+        }
     }
 
     private fun setUpToolBar() {
         setSupportActionBar(binding.toolbar)
         // setup back button on toolbar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = mLaunchVO?.missionName ?: getString(R.string.app_name)
+        supportActionBar?.title = mLaunchVO?.name ?: getString(R.string.app_name)
 
         // back button color
         binding.toolbar.navigationIcon?.setColorFilter(
@@ -81,33 +109,36 @@ class DetailActivity : AppCompatActivity() {
         } ?: binding.ibYoutube.setVisibleOrGone(false)
     }
 
-    private fun bindData() {
+    private fun bindPayloadData(payload: PayloadVO) {
+        // bind payload text
+        checkNullOrEmptyAndBindText(content = payload.name, textView = binding.tvPayloadName, label = "Name : ")
+        checkNullOrEmptyAndBindText(content = payload.type, textView = binding.tvPayloadType, label = "Type : ")
+        checkNullOrEmptyAndBindText(content = payload.getCustomerListAsCommaSeparatedString(), textView = binding.tvPayloadCustomers, label = "Customers : ")
+        checkNullOrEmptyAndBindText(content = payload.getManufacturersAsCommaSeparatedString(), textView = binding.tvPayloadManufacturers, label = "Manufacturers : ")
+        checkNullOrEmptyAndBindText(content = payload.massKg.toString(), textView = binding.tvPayloadMassKg, label = "MassKg : ")
+        checkNullOrEmptyAndBindText(content = payload.massLbs.toString(), textView = binding.tvPayloadMassLbs, label = "MassLbs : ")
+
+    }
+
+    private fun bindLaunchData() {
         // bind image
         mLaunchVO?.let {
             Glide.with(this)
                 .load(mLaunchVO?.links?.patch?.small)
                 .into(binding.ivImage)
 
-            binding.tvLaunchName.text = it.missionName
+            binding.tvLaunchName.text = it.name
             binding.tvLaunchDate.text = it.launchDateUtc?.substring(0, 10)
 
             // bind detail text
-            checkNullOrEmptyAndBindText(
-                content = it.details, textView = binding.tvLaunchDetail, label = null
-            )
+            checkNullOrEmptyAndBindText(content = it.details, textView = binding.tvLaunchDetail, label = null)
 
             // bind failure texts (failure is an array)
             if (it.failures?.isNotEmpty() == true) {
 
-                checkNullOrEmptyAndBindText(
-                    content = it.failures[0].time.toString(), textView = binding.tvFailureTimes, label = "Number of Failure : "
-                )
-                checkNullOrEmptyAndBindText(
-                    content = it.failures[0].altitude.toString(), textView = binding.tvFailureAltitude, label = "Altitude of Failure : "
-                )
-                checkNullOrEmptyAndBindText(
-                    content = it.failures[0].reason, textView = binding.tvFailureReason, label = "Reason of Failure : "
-                )
+                checkNullOrEmptyAndBindText(content = it.failures[0].time.toString(), textView = binding.tvFailureTimes, label = "Number of Failure : ")
+                checkNullOrEmptyAndBindText(content = it.failures[0].altitude.toString(), textView = binding.tvFailureAltitude, label = "Altitude of Failure : ")
+                checkNullOrEmptyAndBindText(content = it.failures[0].reason, textView = binding.tvFailureReason, label = "Reason of Failure : ")
             }
         }
     }
@@ -117,16 +148,6 @@ class DetailActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun checkNullOrEmptyAndBindText(content: String?, textView: TextView, label: String?) {
-
-        if (content.isNullOrBlank() || content == "null") {
-            textView.setVisibleOrGone(false)   // hide TextView
-        } else {
-            textView.setVisibleOrGone(true)    // show TextView
-            val text = label + content
-            textView.text = text
-        }
-    }
 
     // setup toolbar's back button listener
     override fun onSupportNavigateUp(): Boolean {
