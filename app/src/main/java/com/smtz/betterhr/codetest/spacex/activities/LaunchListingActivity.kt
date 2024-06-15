@@ -1,6 +1,9 @@
 package com.smtz.betterhr.codetest.spacex.activities
 
+import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,9 +12,7 @@ import com.smtz.betterhr.codetest.spacex.Listeners.LaunchesDelegate
 import com.smtz.betterhr.codetest.spacex.adapters.LaunchesRecyclerViewAdapter
 import com.smtz.betterhr.codetest.spacex.data.vos.LaunchVO
 import com.smtz.betterhr.codetest.spacex.databinding.ActivityLaunchListingBinding
-import com.smtz.betterhr.codetest.spacex.utils.hideProgressBar
-import com.smtz.betterhr.codetest.spacex.utils.showToastMessage
-import com.smtz.betterhr.codetest.spacex.utils.startActivityWithTransitionAnimation
+import com.smtz.betterhr.codetest.spacex.utils.*
 import com.smtz.betterhr.codetest.spacex.viewmodels.LaunchListingViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -66,8 +67,7 @@ class LaunchListingActivity : AppCompatActivity(), LaunchesDelegate {
     override fun onTapLaunches(launchVO: LaunchVO, imageView: ImageView) {
         // Convert the object to a JSON string
         val jsonString = Gson().toJson(launchVO)
-
-        startActivityWithTransitionAnimation(activity = this, imageView = imageView, jsonString = jsonString)
+        startActivity(LaunchDetailActivity.newIntent(this, jsonString))
     }
 
 }

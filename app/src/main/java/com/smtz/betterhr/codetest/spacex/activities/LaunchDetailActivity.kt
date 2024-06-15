@@ -6,6 +6,7 @@ import android.graphics.PorterDuff
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
@@ -64,6 +65,7 @@ class LaunchDetailActivity : AppCompatActivity() {
     private fun observeLiveData() {
         mLaunchDetailViewModel.mPayloadLiveData.observe(this) { payload ->
             hideProgressBar(binding.progressBar)
+            binding.llPayload.visibility = View.VISIBLE
             bindPayloadData(payload)
         }
 

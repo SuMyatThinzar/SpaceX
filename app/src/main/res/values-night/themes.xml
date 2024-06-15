@@ -12,7 +12,6 @@
     <style name="Theme.SpaceX.TransparentStatusBar" parent="Theme.SpaceX">
         <item name="android:fitsSystemWindows">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowBackground">@drawable/splash_logo_with_background</item>
     </style>
 
 </resources>

@@ -34,6 +34,6 @@
     <dimen name="text_big_3x">80sp</dimen>
 
     <!--  Specific Dimensions  -->
-    <dimen name="height_collapsing_toolbar">200dp</dimen>
+    <dimen name="height_collapsing_toolbar">230dp</dimen>
 
 </resources>
