@@ -6,17 +6,16 @@ import android.graphics.PorterDuff
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.smtz.betterhr.codetest.spacex.R
 import com.smtz.betterhr.codetest.spacex.data.vos.LaunchVO
-import com.smtz.betterhr.codetest.spacex.data.vos.PayloadVO
 import com.smtz.betterhr.codetest.spacex.databinding.ActivityDetailBinding
 import com.smtz.betterhr.codetest.spacex.utils.checkNullOrEmptyAndBindText
 import com.smtz.betterhr.codetest.spacex.utils.*
 import com.smtz.betterhr.codetest.spacex.viewmodels.LaunchDetailViewModel
+import com.smtz.betterhr.codetest.spacex.viewpods.LaunchRelatedFieldsViewPod
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LaunchDetailActivity : AppCompatActivity() {
@@ -27,6 +26,10 @@ class LaunchDetailActivity : AppCompatActivity() {
     private val mLaunchDetailViewModel by viewModel<LaunchDetailViewModel>()
 
     private var mLaunchVO: LaunchVO? = null
+
+    private lateinit var mPayloadViewPod: LaunchRelatedFieldsViewPod
+    private lateinit var mLaunchpadViewPod: LaunchRelatedFieldsViewPod
+    private lateinit var mRocketViewPod: LaunchRelatedFieldsViewPod
 
     companion object {
         private const val EXTRA_LAUNCH_VO_STR = "EXTRA LAUNCH VO STR"
@@ -49,6 +52,7 @@ class LaunchDetailActivity : AppCompatActivity() {
 
         setUpToolBar()
         setUpListeners()
+        setUpViewPods()
         bindLaunchData()
 
         observeLiveData()
@@ -56,21 +60,30 @@ class LaunchDetailActivity : AppCompatActivity() {
 
     private fun setUpViewModel() {
         mLaunchVO?.let { launch ->
-            launch.payloads?.get(0)?.let { payloadId ->
-                mLaunchDetailViewModel.getInitialData(payloadId)
-            } ?: binding.llPayload.setVisibleOrGone(false)          // hide payload view group
+
+            mLaunchDetailViewModel.getInitialData(
+                payloadId = launch.payloads?.get(0),
+                launchpadId = launch.launchpadId,
+                rocketId = launch.rocketId
+            )
         }
     }
 
     private fun observeLiveData() {
         mLaunchDetailViewModel.mPayloadLiveData.observe(this) { payload ->
-            hideProgressBar(binding.progressBar)
-            binding.llPayload.visibility = View.VISIBLE
-            bindPayloadData(payload)
+            mPayloadViewPod.setUpPayloadViewPod(payload)
+        }
+
+        mLaunchDetailViewModel.mLaunchpadLiveData.observe(this) { launchpad ->
+            mLaunchpadViewPod.setUpLaunchpadViewPod(launchpad)
+        }
+
+        mLaunchDetailViewModel.mRocketLiveData.observe(this) { rocket ->
+            mRocketViewPod.setUpRocketViewPod(rocket)
         }
 
         mLaunchDetailViewModel.mErrorLiveData.observe(this) { errorMsg ->
-            hideProgressBar(binding.progressBar)
+            mPayloadViewPod.hideProgressBarAndShowLayout()
             showToastMessage(applicationContext, errorMsg)
         }
     }
@@ -111,15 +124,11 @@ class LaunchDetailActivity : AppCompatActivity() {
         } ?: binding.ibYoutube.setVisibleOrGone(false)
     }
 
-    private fun bindPayloadData(payload: PayloadVO) {
-        // bind payload text
-        checkNullOrEmptyAndBindText(content = payload.name, textView = binding.tvPayloadName, label = "Name : ")
-        checkNullOrEmptyAndBindText(content = payload.type, textView = binding.tvPayloadType, label = "Type : ")
-        checkNullOrEmptyAndBindText(content = payload.getCustomerListAsCommaSeparatedString(), textView = binding.tvPayloadCustomers, label = "Customers : ")
-        checkNullOrEmptyAndBindText(content = payload.getManufacturersAsCommaSeparatedString(), textView = binding.tvPayloadManufacturers, label = "Manufacturers : ")
-        checkNullOrEmptyAndBindText(content = payload.massKg.toString(), textView = binding.tvPayloadMassKg, label = "MassKg : ")
-        checkNullOrEmptyAndBindText(content = payload.massLbs.toString(), textView = binding.tvPayloadMassLbs, label = "MassLbs : ")
+    private fun setUpViewPods() {
 
+        mPayloadViewPod = binding.root.findViewById(R.id.vpPayload)
+        mLaunchpadViewPod = binding.root.findViewById(R.id.vpLaunchpad)
+        mRocketViewPod = binding.root.findViewById(R.id.vpRocket)
     }
 
     private fun bindLaunchData() {

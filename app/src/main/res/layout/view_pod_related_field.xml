@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.smtz.betterhr.codetest.spacex.viewpods.LaunchRelatedFieldsViewPod xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/color_primary_light"
+        android:layout_marginBottom="@dimen/margin_medium_3"
+        android:layout_marginStart="@dimen/margin_medium_3"
+        android:layout_marginEnd="@dimen/margin_medium_3"
+        app:cardCornerRadius="@dimen/margin_medium_2"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:padding="@dimen/margin_medium_2"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_accent"
+                android:layout_marginBottom="@dimen/margin_medium_2"
+                android:textSize="@dimen/text_regular_3x"
+                android:textStyle="bold"
+                tools:text="Launch Name" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.smtz.betterhr.codetest.spacex.viewholders.RoundCornerImageView
+                    android:id="@+id/ivImage"
+                    android:layout_width="@dimen/width_related_image"
+                    android:layout_height="@dimen/height_related_image"
+                    android:layout_marginBottom="@dimen/margin_medium_2"
+                    android:scaleType="centerCrop"
+                    app:cornerRadius="@dimen/margin_medium_2"
+                    tools:src="@mipmap/ic_launcher"/>
+
+                <ProgressBar
+                    android:id="@+id/progressBarImage"
+                    android:layout_width="@dimen/width_related_image"
+                    android:layout_height="@dimen/height_related_image"
+                    android:padding="@dimen/margin_xxlarge"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_medium_2"
+        android:layout_centerInParent="true"/>
+
+</com.smtz.betterhr.codetest.spacex.viewpods.LaunchRelatedFieldsViewPod>

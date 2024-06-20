@@ -35,5 +35,9 @@
 
     <!--  Specific Dimensions  -->
     <dimen name="height_collapsing_toolbar">230dp</dimen>
+    <dimen name="height_launch_image">80dp</dimen>
+    <dimen name="width_launch_image">80dp</dimen>
+    <dimen name="height_related_image">140dp</dimen>
+    <dimen name="width_related_image">180dp</dimen>
 
 </resources>

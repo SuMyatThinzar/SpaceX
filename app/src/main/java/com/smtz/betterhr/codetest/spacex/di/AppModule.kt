@@ -51,4 +51,5 @@ var appModule = module {
     factory {
         (launchesDelegate: LaunchesDelegate) -> LaunchesRecyclerViewAdapter(launchesDelegate)
     }
+
 }

@@ -16,13 +16,19 @@ data class LaunchVO (
     @SerializedName("links")
     val links: LinkVO?,
 
+    @SerializedName("rocket")
+    val rocketId: String?,
+
+    @SerializedName("launchpad")
+    val launchpadId: String?,
+
+    @SerializedName("payloads")
+    val payloads: List<String>?,
+
     @SerializedName("details")
     val details: String?,
 
     @SerializedName("failures")
     val failures: List<FailureVO>?,
-
-    @SerializedName("payloads")
-    val payloads: List<String>?,
 
 )

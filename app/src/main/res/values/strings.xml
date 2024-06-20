@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">SpaceX</string>
     <string name="lbl_payload">Payload</string>
+    <string name="lbl_launchpad">Launchpad</string>
+    <string name="lbl_rocket">Rocket</string>
     <string name="lbl_read_article">Read Article</string>
 </resources>

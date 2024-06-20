@@ -97,88 +97,32 @@
                 android:text="Failure Reason"
                 android:visibility="gone"/>
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
             <LinearLayout
-                android:id="@+id/llPayload"
+                android:id="@+id/relativeLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_large"
-                android:textColor="@color/color_accent"
-                android:textStyle="bold"
-                android:textSize="@dimen/text_regular_3x"
-                android:text="@string/lbl_payload"/>
-
-            <TextView
-                android:id="@+id/tvPayloadName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/margin_medium_2"
-                android:textColor="@color/color_accent"
-                android:textSize="@dimen/text_regular_2x"
-                android:text="name"/>
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvPayloadType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_medium_2"
-                android:textColor="@color/color_accent"
-                android:textSize="@dimen/text_regular_2x"
-                android:text="type"/>
+                <include
+                    android:id="@+id/vpPayload"
+                    layout="@layout/view_pod_related_field"/>
 
-            <TextView
-                android:id="@+id/tvPayloadCustomers"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_medium_2"
-                android:textColor="@color/color_accent"
-                android:textSize="@dimen/text_regular_2x"
-                android:text="customers"/>
+                <include
+                    android:id="@+id/vpLaunchpad"
+                    layout="@layout/view_pod_related_field"/>
 
-            <TextView
-                android:id="@+id/tvPayloadManufacturers"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_medium_2"
-                android:textColor="@color/color_accent"
-                android:textSize="@dimen/text_regular_2x"
-                android:text="manufacturers"/>
-
-            <TextView
-                android:id="@+id/tvPayloadMassKg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_medium_2"
-                android:textColor="@color/color_accent"
-                android:textSize="@dimen/text_regular_2x"
-                android:text="massKg"/>
-
-            <TextView
-                android:id="@+id/tvPayloadMassLbs"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_medium_2"
-                android:textColor="@color/color_accent"
-                android:textSize="@dimen/text_regular_2x"
-                android:text="massLbs"/>
+                <include
+                    android:id="@+id/vpRocket"
+                    layout="@layout/view_pod_related_field"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_medium_2"
-                android:layout_marginBottom="@dimen/margin_medium_2"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginBottom="@dimen/margin_large"
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
 

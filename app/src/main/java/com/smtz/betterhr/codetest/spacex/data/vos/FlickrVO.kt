@@ -8,5 +8,10 @@ data class FlickrVO (
     val small: List<String>?,
 
     @SerializedName("original")
-    val original: List<String>?
+    val original: List<String>?,
+
+    @SerializedName("large")
+    val large: List<String>?   // for launchpad image only
+
+
 )
